@@ -13,33 +13,27 @@
 
   <body>
 
-  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="navbar navbar-inverse" role="navigation">
     <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-      <span class="sr-only">Toggle navigation</span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      </button>
       <a class="navbar-brand" href="#">Car Gallery</a>
     </div>
     <div class="navbar-collapse collapse">
       <form class="navbar-form navbar-right" role="form">
       <div class="form-group">
-        <select class="form-control" id="year" name="year">
-          <option value="">- Select Year -</option>
-          <option value="2014">2014</option>
-          <option value="2013">2013</option>
+        <select class="form-control input-lg" id="car-years" name="car-years">
+          <option>- Select Year -</option>      
         </select>
       </div>
       <div class="form-group">
-        <select class="form-control" id="make" name="make">
-          <option value="">- Select Make -</option>
-          <option value="2014">Acura</option>
-          <option value="2013">Ford</option>
-        </select>
+        <select class="form-control input-lg" id="car-makes" name="car-makes"></select>
       </div>
+      <div class="form-group">
+        <select class="form-control input-lg" id="car-models" name="car-models"></select>
+      </div>
+      <div class="form-group">
+        <select class="form-control input-lg" id="car-model-trims" name="car-model-trims"></select>
+      </div>                  
       </form>
     </div><!--/.navbar-collapse -->
     </div>
@@ -47,17 +41,16 @@
 
 
   <div class="container">
-    <!-- Example row of columns -->
     <div class="row">
-      <div class="col-md-12">
-        <h2>Models</h2>
-        <ul>
-          <li></li>
-        </ul>
+      <div class="col-xs-3">
+        <a href="#" class="thumbnail">
+          <img data-src="holder.js/100%x180" alt="100%x180" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNzEiIGhlaWdodD0iMTgwIj48cmVjdCB3aWR0aD0iMTcxIiBoZWlnaHQ9IjE4MCIgZmlsbD0iI2VlZSI+PC9yZWN0Pjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9Ijg1LjUiIHk9IjkwIiBzdHlsZT0iZmlsbDojYWFhO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1zaXplOjEycHg7Zm9udC1mYW1pbHk6QXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+MTcxeDE4MDwvdGV4dD48L3N2Zz4=" style="height: 180px; width: 100%; display: block;">
+        </a>
       </div>
     </div>
   </div> <!-- /container -->
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <script type="text/javascript" src="script.js"></script>
   </body>
 </html>
