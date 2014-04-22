@@ -1,6 +1,6 @@
 (function ($) {
 
-    var dataURL = 'http://www.carqueryapi.com/api/0.3/?callback=?';
+    var dataURL = 'http://www.carqueryapi.com/api/0.3/?callback=?&sold_in_us=1';
     var pictureAPI = "http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?";
     var pictureSearchTag = "collectible car";
 
@@ -44,9 +44,9 @@
             format: "json"
         }).done(function( data ) {
             $.each( data.items, function( i, item ) {
-                $( '<div class="col-xs-3"><a href="' + item.link + '" class="thumbnail"><img src="' + item.media.m + '"></a></div>' )
+                $( '<a href="' + item.link + '" class="thumbnail"><img src="' + item.media.m + '"></a>' )
                 .appendTo( "#gallery_row" );
-                if ( i === 11 ) {
+                if ( i === 0 ) {
                   return false;
                 }
             });
@@ -102,7 +102,7 @@
 
 
         });
-        pictureSearchTag = selectedItems.make + " " + selectedItems.model;
+        pictureSearchTag = selectedItems.year + " " + selectedItems.make + " " + selectedItems.model;
         populateGallery();
 
 

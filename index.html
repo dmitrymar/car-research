@@ -7,11 +7,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="">
   <meta name="author" content="">
-  <title>Car Gallery</title>
+  <title>Dmitry Autos</title>
   <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
   <style>
   #gallery_row img {
-    height: 150px;
+    /*height: 150px;*/
   }
   </style>
   </head>
@@ -21,24 +21,20 @@
   <div class="navbar navbar-inverse" role="navigation">
     <div class="container">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">Car Gallery</a>
+      <a class="navbar-brand" href="index.html">RESEARCH A NEW CAR</a>
     </div>
     <div class="navbar-collapse collapse">
       <form class="navbar-form navbar-right" role="form">
-      <div class="form-group">
-        <select class="form-control input-lg" id="car-years" name="car-years">
-          <option>- Select Year -</option>      
-        </select>
-      </div>
-      <div class="form-group">
-        <select class="form-control input-lg" id="car-makes" name="car-makes"></select>
-      </div>
-      <div class="form-group">
-        <select class="form-control input-lg" id="car-models" name="car-models"></select>
-      </div>
-      <div class="form-group">
-        <select class="form-control input-lg" id="car-model-trims" name="car-model-trims"></select>
-      </div>                  
+        <div class="form-group">
+          <select class="form-control input-lg" id="car-makes" name="car-makes">
+            <option>Make</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <select class="form-control input-lg" id="car-models" name="car-models">
+            <option>Model</option>
+          </select>
+        </div>                    
       </form>
     </div><!--/.navbar-collapse -->
     </div>
@@ -46,9 +42,56 @@
 
 
   <div class="container">
-    <div class="row" id="gallery_row">
-      <!-- <div class="col-xs-3"><a href="" class="thumbnail"><img src=""></a></div> -->
-
+    <h1>2014 Ford Focus Sedan</h1>
+    <div class="row">
+      <div class="col-xs-6">
+        <div class="row">
+          <div class="col-xs-12" id="gallery_row"></div>      
+        </div>
+        <button type="button" class="btn btn-default">
+          <span class="glyphicon glyphicon-new-window"></span> View All Photos
+        </button>            
+      </div>
+      <div class="col-xs-6">
+        <div class="form-group">
+          <select class="form-control input-lg" id="car-model-trims" name="car-model-trims">
+            <option>Trims</option>          
+          </select>
+        </div>
+        <h3>Features and Specs</h3>
+        <div class="row">
+          <div class="col-xs-6">
+            <dl class="dl-horizontal">
+              <dt>Engine</dt>
+              <dd>2.0 L Inline 4-cylinder</dd>
+              <dt>Drivetrain</dt>
+              <dd>Front Wheel Drive</dd>
+              <dt>Transmission</dt>
+              <dd>5-speed Manual</dd>
+              <dt>Horse Power</dt>
+              <dd>160 hp @ 6500 rpm</dd>              
+            </dl>             
+          </div>
+          <div class="col-xs-6">
+            <dl class="dl-horizontal">
+              <dt>Fuel Economy</dt>
+              <dd>24/35 mpg</dd>
+              <dt>Bluetooth</dt>
+              <dd>Yes</dd>
+              <dt>Navigation</dt>
+              <dd>No</dd>
+              <dt>Heated Seats</dt>
+              <dd>Yes</dd>      
+            </dl>             
+          </div>          
+        </div>
+        <button type="button" class="btn btn-default">
+          <span class="glyphicon glyphicon-new-window"></span> View All
+        </button>                  
+      </div>
+    </div>
+    <div class="footer">
+      <p><a href="prototype/index.html">View Prototype.html</a></p>
     </div>
   </div> <!-- /container -->
 
