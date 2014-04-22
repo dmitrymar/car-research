@@ -1,0 +1,375 @@
+.table {
+  thead {
+    tr {
+      th {
+        border: none;
+      }
+    }
+  }
+  tbody {
+    tr {
+      td {
+        border: none;
+        .table__status-box {
+          padding: 0.7rem 1.5rem 1rem;
+          background: #f1f7ff;
+          display: inline-block;
+          float: right;
+        }             
+      }
+    }
+  }  
+  .scores-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    float: right;
+
+    li {
+      float: left;
+      margin: 0;
+      padding: 0;
+      font-weight: bold;
+
+      &:nth-child(2) {
+        width: 4rem;
+        margin-left: 0.4rem;
+        color: @gray-light;
+        font-weight: normal;
+
+        &:before {
+            content: "| ";
+            color: black;
+        }
+      }
+    }
+  }
+  &.table-history {
+    border-bottom: 0.1rem dotted #DDD;
+    &:last-child {
+      border-bottom: 0;
+    }
+    tbody {
+      tr {
+        td {
+          padding-bottom: 2.5rem;
+          &:nth-child(-n+2) {
+            width: 12rem;
+          }
+          &:first-child {
+            padding-left: 0;
+            ul {
+              margin: 0;
+              padding: 0.7rem;
+              list-style: none;
+              background: #c7c7c7;
+              width: 7.5rem;
+              height: 6.5rem;
+              color: #fff;              
+              li {
+                margin: 0;
+                padding: 0;
+                float: right;
+                font-size: 1.2rem;
+                font-weight: bold;
+                clear: both;
+                &:first-child {
+                  font-size: 0.9rem;
+                  font-weight: normal;
+                  line-height: 1.6rem;
+                }
+                &:nth-child(3) {
+                  font-size: 1.6rem;
+                  line-height: 1.7rem;
+                }
+              }
+            }
+          }
+          &:last-child {
+            font-size: 1.2rem;
+            strong {
+              font-size: 1.4rem;
+            }
+            .fa-external-link {
+              margin-left: 0.5rem;
+            }
+            p {
+              line-height: 2rem;
+              margin-bottom: 0.5rem;
+            }
+            .table-history__term {
+              background: #c0d1e1;
+              font-size: 1.2rem;
+              padding: 0.3rem 0.6rem;
+            }            
+          }
+        }
+      }
+    }    
+  }
+  &.table-readonly {
+    margin: 1rem 0;
+    tbody {
+      tr {
+        td {
+          &:nth-child(even) {
+            float: right;
+            font-weight: bold;
+          }
+        }
+      }
+    }
+  }
+  &.table-dotted-rows {
+    tbody {
+      tr {
+        td {
+          border-top: 0.1rem dotted #DDD;
+        }
+        &:first-child {
+          td {
+            border: none;
+          }
+        }            
+      }
+    }
+  }  
+  &.table-bureau-page {
+    margin: 1rem 0;
+    thead {
+      tr {
+        th {
+          font-size: 1.4rem;
+          font-weight: normal;
+          text-align: center;
+          vertical-align: middle;
+          span {
+            height: 4rem;
+            width: 12rem;
+            background-image: url("../../img/bureau_sprite.png");
+            display: inline-block;
+          } 
+          &:first-child {
+            text-align: right;
+          }
+
+          &:nth-child(3) {
+            span {
+              background-position: 0 -4rem;
+            }
+          }
+          &:nth-child(4) {
+            span {
+              background-position: 0 -8rem;
+            }
+          }
+        }
+      }
+    }
+    tbody {
+      tr {
+        td {
+          text-align: center;
+          vertical-align: middle;
+          &:first-child {
+            text-align: right;
+          }
+          .bureau-report-pdf {
+            background-image: url("../../img/bureau_sprite.png");
+            background-position: 0 -21rem;
+            display: inline-block;
+            line-height: 2.7rem;
+            padding-left: 3.9rem;
+            width: 11.5rem;
+            height: 2.9rem;
+            &:hover {
+              text-decoration: none;
+            }
+          }
+        }
+        &:first-child {
+          td:nth-child(even) {
+            font-size: 2.1rem;
+          }
+        }
+      }
+    }
+  }
+  &.table-program {
+    margin: 1rem 0;
+    border-collapse: separate;    
+    thead {
+      background: @table-program-thead-bg;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: normal;
+
+      tr {
+        th {
+          border-bottom: none;
+          border-right: 0.1rem darken(@table-program-thead-bg, 5%) solid;
+          border-left: 0.1rem lighten(@table-program-thead-bg, 5%) solid;
+          text-align: center;
+          &:first-child {
+            text-align: left;
+            border-left-width: 0;
+          }
+          &:last-child {
+            border-right-width: 0;
+          }          
+        }
+      }
+    }
+    tbody {
+      tr {
+        &:first-child {
+          td {
+            border: none;
+          }
+        }
+        td {
+          &:first-child {
+            width: 4%;
+          }
+          &:nth-child(2) {
+            width: 50%;
+            h5 {
+              margin-top: 0.4rem;
+            }
+          }
+          &:nth-child(3), &:nth-child(4), &:nth-child(5) {
+            text-align: center;
+          }
+          font-weight: bold;
+          font-size: 1.3rem;
+          .program-details {
+            font-weight: normal;
+            ul {
+              margin: 0;
+              padding-left: 1.5rem;
+              li {
+                font-size: 1.3rem;
+                line-height: 2rem;
+                list-style-position: inside;
+              }
+            }
+          }
+          .collapsible {
+            position: relative;
+            display: block;
+            padding-left: 1.5rem;
+            color: #454545;
+            text-decoration: none;
+            cursor: pointer;
+            &:before {
+              content: ' ';
+              height: 0;
+              position: absolute;
+              width: 0;
+              border: 0.4rem solid transparent;
+              border-top-color: #454545;
+              top: 0.9rem;
+              left: 0.1rem;
+            }
+            &.collapsed {
+              &:before {
+                border-top-color: transparent;
+                border-left-color: #454545;
+                top: 0.6rem;
+                left: 0.3rem;                
+              }
+            }
+          }              
+        }
+      }
+    }
+  }
+  &.table-active {
+    margin: 0;
+    tbody {
+      tr {
+        td {
+          &:nth-child(3) {
+            font-size: 1.3rem;
+            line-height: 2.1rem;
+          }
+          &:last-child {
+            .table__status-box {
+              ul {
+                margin: 0;
+                padding: 0;
+                list-style: none;
+                width: 15.2rem;
+                li {
+                  float: left;
+                  width: 2.4rem;
+                  height: 2.4rem;
+                  margin-right: 0.8rem;
+                  border-radius: 0.2rem;
+                  background: #dbdcdb;
+                  cursor: pointer;
+                  line-height: 2rem;
+                  i {
+                    font-size: 1.8rem;
+                    color: #fff;
+                    padding-left: 0.2rem;
+                    &.dt-icon-calculator, &.dt-icon-key {
+                      padding-top: 0.2rem;
+                    }
+                  }
+                  &:last-child {
+                    margin-right: 0;
+                  }
+                  &.completed {
+                    background: #6ba648;
+                  }                      
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  &.table-contract {
+    tbody {
+      tr {
+        td {
+          width: 33.3%;
+          line-height: 2rem;
+          .table__status-box {
+            width: 20rem;
+            p {
+              position: relative;
+              margin: 0;
+              .icon-contract-status { 
+                font-size: 1.3rem;
+                padding-left: 2rem;
+                &:before {
+                  font-family: DtFont;
+                  font-size: 1.4rem;
+                  margin-right: 1rem;
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                }                    
+                &.icon-contract-booked {
+                  &:before {
+                    content: "f";
+                    color: #6ba648;                          
+                  }
+                }
+                &.icon-contract-returned {
+                  &:before {
+                    content: "d";
+                    color: @gray;                          
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

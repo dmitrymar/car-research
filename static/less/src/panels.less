@@ -1,0 +1,61 @@
+.panel {
+  border: 0.1rem solid @body-bg;
+  border-top: 0.3rem solid @body-bg;
+  padding: 0 0.8rem;
+  border-radius: 0;
+
+  h4 {
+    margin: 0.7rem 0;
+
+    span {
+      font-weight: normal;
+    }
+  }
+
+  .panel__divider {
+    height: 0.1rem;
+    background-color: @body-bg;
+    margin-bottom: 1rem;
+    width: 100%;
+  }
+
+  .panel__legend {
+    font-size: 1.6rem;
+    color: @brand-primary;
+    &.collapsible {
+      position: relative;
+      display: block;
+      padding-left: 1.5rem;
+      text-decoration: none;
+      cursor: pointer;
+      &:before {
+        content: ' ';
+        height: 0;
+        position: absolute;
+        width: 0;
+        border: 0.4rem solid transparent;
+        border-top-color: @brand-primary;
+        top: 0.9rem;
+        left: 0.1rem;
+      }
+      &.collapsed {
+        &:before {
+          border-top-color: transparent;
+          border-left-color: @brand-primary;
+          top: 0.6rem;
+          left: 0.3rem;                
+        }
+      }
+    }         
+  }
+
+  .panel__contents {
+    padding-left: 1rem;
+    padding-bottom: 1rem;    
+  }
+  .alert {
+    margin: 2rem 0;
+    padding: 0.8rem 3.5rem 0.8rem 1.4rem;
+    font-size: 1.3rem;        
+  }
+}

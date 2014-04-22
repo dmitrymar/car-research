@@ -1,0 +1,268 @@
+.btn {
+  display: inline-block;
+  padding: 0.4rem 1.4rem;
+  margin-bottom: 0; // For input.btn
+  line-height: @line-height-base;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  border-radius: @btn-border-radius;
+
+  // Hover state
+  &:hover {
+    text-decoration: none;
+    background-position: 0 -1.5rem;
+
+    // transition is only when going to hover, otherwise the background
+    // behind the gradient (there for IE<=9 fallback) gets mismatched
+    .transition(background-position .1s linear);
+  }
+
+  // Focus state for keyboard and accessibility
+  &:focus {
+    .tab-focus();
+  }
+
+  // Disabled state
+  &.btn-default, &.btn-primary {
+    .box-shadow(~"inset 0 0.1rem 0 rgba(255,255,255,.2), 0 0.1rem 0.2rem rgba(0,0,0,.05)");
+    border: 0.1rem solid @btn-default-border;
+    border-bottom-color: darken(@btn-default-border, 10%);
+  }
+
+
+  &.btn-default, &.btn-primary {
+    font-weight: bold;
+    font-size: 1.3rem;
+    line-height: 2.2rem;
+
+    &.btn-sm {
+      .button-size(0.4rem; 0.8rem; 1.2rem; 1.2rem; @btn-border-radius);
+    }
+
+    &.btn-icon {
+      .button-size(0.4rem; 0.7rem; 1.5rem; 1.6rem; @btn-border-radius)
+    }
+  }
+
+  &.btn-default {
+    color: @btn-default-color;
+    .button-bg(@btn-default-bg, @btn-default-highlight, @btn-default-color, 
+      0 0.1rem 0.1rem rgba(255,255,255,.75));    
+  }   
+
+  &.btn-primary {
+    .button-bg(@btn-primary-bg, @btn-primary-bg-highlight);
+  }
+
+  &.btn-list {
+    .box-shadow(0.1rem 0.1rem 0.2rem 0.1rem @gray-light);
+    border-radius: 0.1rem;
+    padding: 0.2rem 1rem;
+    background-color: @gray-lighter;
+    font-size: 1.3rem;
+    color: @text-color;
+
+    &:hover {
+      background-color: #fff;
+    }
+
+    &:disabled {
+      color: lighten(@text-color, 25%);
+    }
+  }  
+
+  &.btn-function {
+    font-size: 1.1rem;
+    color: #666;
+    background: #ebebe9;
+    border-color: #dededd;
+
+    .fa {
+      font-size: 1.6rem;
+      line-height: 1rem;
+      padding-right: 0.2rem;
+
+      &.fa-share-square-o {
+        line-height: 0.8rem;
+      }
+    }
+
+    span {
+      line-height: 1.6rem;
+    }
+
+    .caret {
+      border-top-color: #666;
+    }
+
+    &:hover {
+      background: #f2f2f2;
+    }
+
+    &:active {
+      .box-shadow(none);
+    }
+
+  }  
+
+}
+
+.btn-group {
+  &.open {
+    &.btn-function-group {
+      .dropdown-menu {
+        background-color: #fff;
+        &.notes-menu {
+          width: 21.4rem;
+          left: -5.3rem;
+          padding: 0.1rem;
+          >li {
+            &.notes-menu__header {
+              margin: 0 0.3rem 0.7rem 0.6rem;
+              border-bottom: 0.1rem @gray-lighter solid;
+              li {
+                font-weight: bold;
+                padding: 0.5rem;
+                &:first-child {
+                  float: left;
+                }
+                &:last-child {
+                  font-size: 1.1rem;
+                  float: right;
+                }
+              }
+            }
+            &.notes-menu__body {
+              margin: 0 0.9rem 1.1rem;
+              ul {
+                li {
+                  border-top: 0.1rem @gray-lighter dotted;
+                  padding-top: 0.7rem;
+                  margin-top: 0.7rem;
+                  &:first-child {
+                    border: 0;
+                    margin: 0;
+                    padding: 0;
+                  }                  
+                  a {
+                    font-weight: bold;
+                  }
+                  p {
+                    margin: 0;
+                  }
+                }
+              }
+            }
+            &.notes-menu__footer {
+              text-align: center;
+              margin: 0;
+              a {
+                border: 0;
+                background: @btn-primary-bg;
+                color: #fff;
+                &:hover {
+                  background: @btn-primary-bg-highlight; 
+                }              
+              }
+            }
+          }
+        }
+
+        li {
+          a {
+            color: @link-color;
+            text-decoration: none;
+
+            &.disabled, &.disabled:hover {
+              color: @btn-link-disabled-color;
+            }
+
+            &:hover {
+              color: @link-hover-color;
+            }           
+          }
+        }
+        >li {
+          text-align: left;
+          >a {
+            border-top: 0.1rem @gray-lighter dotted;                                    
+          }
+        }
+      }
+    }
+    &.btn-icon-group {
+      .dropdown-menu {
+        background-color: @btn-primary-bg-highlight;
+        border: 0.1rem darken(@btn-primary-border, 12%) solid;
+
+        li {
+          a {
+            border-top: 0.1rem @btnIconDropdownRule dotted;            
+            color: @btnIconDropdownText;
+
+            &.disabled, &.disabled:hover {
+              color: @btnIconDropdownRule;
+            }
+
+            &:hover {
+              color: @btnIconDropdownHoverText;
+            }                        
+          }
+        }        
+      }
+    }    
+    &.btn-icon-group, &.btn-function-group {
+      ul {
+        list-style: none;
+        padding: 0;
+        &.dropdown-menu {
+          border-top: none;
+          top: 2.3rem;
+          float: right;
+          right: 0;
+          left: inherit;
+          font-size: 1.2rem;
+          padding: 0 0.7rem 0.3rem;
+
+          >li {
+            >a {
+              padding: 0.5rem;
+
+              &.disabled, &.disabled:hover {
+                cursor: default;
+              }
+
+              &:hover {
+                background: transparent;
+              }
+            }
+
+            &:first-child {
+              a {
+                border: none;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .dropdown-toggle {
+      .box-shadow(none);
+
+      &.btn-function {
+        background-color: #fff;
+        border-bottom-color: transparent;
+      }
+
+      &.btn-icon {
+        background-color: @btn-primary-bg-highlight;
+      }
+    }
+
+    .dropdown-menu {
+      border-radius: @btn-border-radius;
+    }    
+  }
+}

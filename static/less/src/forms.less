@@ -1,0 +1,163 @@
+.main {
+  .main__content {
+
+    .has-date {
+      position: relative;
+
+      button {
+        position: absolute;
+        right: 1.5rem;
+        top: 0.5rem;
+        background: transparent;
+        border: none;
+        color: @text-muted;
+        border-left: 0.1rem lighten(@text-muted, 30%) solid;
+        font-size: 1.8rem;
+        margin-left: 2rem;
+        padding: 0 1rem;
+      }
+    }
+
+    form {
+
+      label {
+        font-size: 1.3rem;
+      }
+
+      &.form-horizontal {
+
+        fieldset {
+
+          legend {
+            font-size: 1.5rem;
+            color: @brand-primary;
+            margin: 0;
+            margin-left: 1.5rem;
+            font-weight: normal;
+            border-bottom: 0;
+            padding-top: 0.3rem;
+            line-height: 4rem;
+          }
+
+          .well {
+            border-radius: 0;
+            border-width: 0;
+            box-shadow: none;
+            padding: 1.9rem 0;
+          }      
+        }
+
+        .form-group {
+
+          .char-count {
+            font-size: 1rem;
+          }        
+
+          .radio-inline {
+            margin-right: 2rem;
+          }
+
+          &.has-error {
+
+            .help-block {
+              font-style: normal;
+            }
+          }
+
+          .controls-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+
+            li {
+              float: left;
+              margin: 0;
+              padding: 0;
+              width: 14rem;
+
+              &:first-child {
+                margin-left: 0;
+              }
+
+              .checkbox {
+                padding-left: 0;
+
+                input[type="checkbox"],
+                input[type="radio"], {
+                  margin-left: 0;
+                  margin-right: 0.7rem;
+                }
+              }
+            }
+          }
+          .image-radios {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+
+            li {
+              margin: 0;
+              padding: 0;
+              width: 12rem;
+              height: 8rem;
+              border: 0.1rem @body-bg solid;
+              float: left;
+              margin-right: 2rem;
+              position: relative;
+              background-image: url("../../img/bureau_sprite.png");
+              background-repeat: no-repeat;
+              display: block;
+              background-position: 0 0;
+
+              &:nth-child(2) {
+                background-position: 0 -4rem;      
+              }
+              &:nth-child(3) {
+                background-position: 0 -8rem;      
+              }
+              &:nth-child(4) {
+                background: @well-bg;
+
+                input[type="text"] {
+                  width: 70%;
+                  margin: 10% 15%;
+                  z-index: 2;
+                  position: relative;
+                } 
+              }
+
+              .radio {
+                background: @well-bg;
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                height: 45%;
+                padding-left: 5rem;
+                padding-top: 0.9rem;     
+              }
+            }
+          }
+        }        
+
+        .select-wrap {
+          margin-right: 1rem;
+
+          select {
+            width: auto;
+          }
+        }
+
+        div {
+
+          &.col-xs-1, &.col-xs-2, &.col-xs-3, &.col-xs-4, &.col-xs-5 {
+            padding-left: 0;
+          }
+        }
+
+        .control-label {
+          padding-right: 2rem;
+        }
+      }
+    }
+  }
+}

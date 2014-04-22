@@ -1,0 +1,94 @@
+/*  DtFont */
+
+@font-face {
+  font-family: 'DtFont';
+  src: url('../../fonts/dt/dt-webfont.eot');
+
+  src: url('../../fonts/dt/dt-webfont.eot?#iefix') format('embedded-opentype'),
+    url('../../fonts/dt/dt-webfont.woff') format('woff'),
+    url('../../fonts/dt/dt-webfont.ttf') format('truetype'),
+    url('../../fonts/dt/dt-webfont.svg#DtFont') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/*  DtFont styles
+    ------------------------------------------------------- */
+[class^="dt-icon-"]:before,
+[class*=" dt-icon-"]:before {
+  font-family: DtFont;
+  font-weight: normal;
+  font-style: normal;
+  display: inline-block;
+  text-decoration: inherit;
+}
+
+a [class^="dt-icon-"],
+a [class*=" dt-icon-"] {
+  display: inline-block;
+  text-decoration: inherit;
+}
+
+/* makes the font 33% larger relative to the dt-icon container */
+.dt-icon-large:before {
+  vertical-align: middle;
+  font-size: 4/3em;
+}
+
+.btn, .nav-tabs {
+  [class^="dt-icon-"],
+  [class*=" dt-icon-"] {
+  /* keeps button heights with and without dt-icons the same */
+    line-height: .9em;
+  }
+}
+
+li {
+  [class^="dt-icon-"],
+  [class*=" dt-icon-"] {
+    display: inline-block;
+    width: 1.25em;
+    text-align: center;
+  }
+  .dt-icon-large:before,
+  .dt-icon-large:before {
+    /* 1.5 increased font size for dt-icon-large * 1.25 width */
+    width: 1.5*1.25em;
+  }
+}
+
+ul.dt-icons {
+  list-style-type: none;
+  margin-left: 2em;
+  text-indent: -.8em;
+
+  li {
+    [class^="dt-icon-"],
+    [class*=" dt-icon-"] {
+      width: .8em;
+    }
+    .dt-icon-large:before,
+    .dt-icon-large:before {
+      /* 1.5 increased font size for dt-icon-large * 1.25 width */
+      vertical-align: initial;
+//      width: 1.5*1.25em;
+    }
+  }
+}
+
+.dt-icon-credit-card:before          { content: "q"; }
+.dt-icon-calculator:before           { content: "r"; }
+.dt-icon-handshake:before            { content: "w"; }
+.dt-icon-key:before                  { content: "t"; }
+.dt-icon-car:before                  { content: "e"; }
+.dt-icon-checkmark:before            { content: "u"; }
+.dt-icon-twoarrows:before            { content: "o"; }
+.dt-icon-spinner:before              { content: "y"; }
+.dt-icon-x:before                    { content: "i"; }
+.dt-icon-document:before             { content: "a"; }
+.dt-icon-exclamation-sign:before     { content: "g"; }
+.dt-icon-dollar-sign:before          { content: "f"; }
+.dt-icon-right-arrow:before          { content: "d"; }
+.dt-icon-wifi-signal:before          { content: "s"; }
+.dt-icon-bubble-lender:before        { content: "h"; }
+.dt-icon-bubble-dealer:before        { content: "j"; }
