@@ -1,0 +1,19 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'start' ]
+2 info using npm@1.4.3
+3 info using node@v0.10.26
+4 warn invalid config proxy="http://:port"
+5 warn invalid config Must be a full url with 'http://'
+6 error Error: ENOENT, open '/home/dtdev/Projects/Car-Gallery/prototype/package.json'
+7 error If you need help, you may report this *entire* log,
+7 error including the npm and node versions, at:
+7 error     <http://github.com/npm/npm/issues>
+8 error System Linux 2.6.32-279.2.1.el6.x86_64
+9 error command "/usr/local/bin/node" "/usr/local/bin/npm" "start"
+10 error cwd /home/dtdev/Projects/Car-Gallery/prototype
+11 error node -v v0.10.26
+12 error npm -v 1.4.3
+13 error path /home/dtdev/Projects/Car-Gallery/prototype/package.json
+14 error code ENOENT
+15 error errno 34
+16 verbose exit [ 34, true ]
