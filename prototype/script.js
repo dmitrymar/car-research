@@ -133,7 +133,7 @@ $(function() {
 
 
         $('#car-makes').on('change', function() {
-            var carMakesVal = $('#car-makes').val();
+            var carMakesVal = $(this).val();
 
             if ( carMakesVal == 0 ) {
                 $('#car-models').attr("disabled", true);
@@ -149,7 +149,15 @@ $(function() {
                     $('#car-models').append( '<option value="DB9">DB9</option><option value="DBS">DBS</option>' );
                 }        
             }
-        })
+        });
+
+        $('#car-models').on('change', function() {
+          var carModelsVal = $(this).val();
+
+          if ( carModelsVal != 0 ) {
+            window.location = "car-overview.html";
+          }
+        });
 
     })
 });
