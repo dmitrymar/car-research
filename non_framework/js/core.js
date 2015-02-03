@@ -1,6 +1,27 @@
 var main = {
     baseServiceUrl: 'http://api.edmunds.com/api/vehicle/v2/',
-    apiKey: 'pavaa2wzx6fbzzv6et9n3n5a'
+    baseImgUrl: 'http://media.ed.edmunds-media.com',
+    imgServiceUrl: 'https://api.edmunds.com/v1/api/vehiclephoto/service/findphotosbystyleid?styleId=',
+    imgServiceUrlParams: '&fmt=json&api_key=',
+    apiKey: 'pavaa2wzx6fbzzv6et9n3n5a',
+    getCarImg: function(id) {
+        var imagesJSON = this.imgServiceUrl + id + this.imgServiceUrlParams + this.apiKey,
+        img, imgResized;
+        $.getJSON(imagesJSON, function(result) {
+            if (!!result.length) {
+                $.each(result, function(key, value) {
+                    if (value.shotTypeAbbreviation === 'FQ') {
+                        img = value.photoSrcs[0];
+                        imgResized = main.baseImgUrl + img.substring(0, img.lastIndexOf('_')+1) + '131.jpg'
+                        return false;
+                    }
+                });
+                $("[data-trimid='" + id + "']").attr("src", imgResized);
+            }
+
+
+        })
+    }
 };
 
 ;(function ($) {
@@ -41,7 +62,6 @@ var createModelsList = function(selectedIndex) {
         .prop("disabled", false);
     var optionString = '', modelNames = [], latestYear;
     dataArray.forEach(function(index) {
-        console.log(index)
         latestYear = index.years[index.years.length-1];
 
         latestYear.styles.forEach(function(index2) {
