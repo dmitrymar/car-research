@@ -5,19 +5,29 @@ var main = {
   imgServiceUrlParams: '&fmt=json&api_key=',
   makesUrl: 'http://api.edmunds.com/api/vehicle/v2/' + 'makes?fmt=json&state=new&api_key=' + 'pavaa2wzx6fbzzv6et9n3n5a',
   apiKey: 'pavaa2wzx6fbzzv6et9n3n5a',
-  getCarImg: function(id) {
+  getCarImg: function(id, type, key) {
     var imagesJSON = this.imgServiceUrl + id + this.imgServiceUrlParams + this.apiKey,
-    img, imgResized;
+    img, imgResized, size = type === "thumb" ? "131.jpg" : "600.jpg";
     $.getJSON(imagesJSON, function(result) {
       if (!!result.length) {
         $.each(result, function(key, value) {
           if (value.shotTypeAbbreviation === 'FQ') {
             img = value.photoSrcs[0];
-            imgResized = main.baseImgUrl + img.substring(0, img.lastIndexOf('_')+1) + '131.jpg'
+            imgResized = main.baseImgUrl + img.substring(0, img.lastIndexOf('_')+1) + size;
             return false;
           }
         });
-        $("[data-trimid='" + id + "']").attr("src", imgResized);
+        if (type === "thumb") {
+          $("[data-trimid='" + id + "']").attr("src", imgResized);          
+        } else {
+          console.log(imgResized)
+          if (imgResized === $(".carousel-inner").find("img:eq(0)").attr("src")) {
+            console.log("same")
+          } else {
+            $(".carousel-inner").find("img:eq(" + key + ")").attr("src", imgResized);             
+          }
+         
+        }
       }
 
 

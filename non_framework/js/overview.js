@@ -83,6 +83,7 @@ var populateObject = function() {
 
 var populatePage = function() {
     populateObject();
+    var maxGalleryPics = 3;
     $('#car-title').append(pageData.year + ' ' + pageData.make + ' ' + pageData.model);
     $('#lowestMSRP').append(pageData.lowestMSRP);
     $('#highestMSRP').append(pageData.highestMSRP);
@@ -110,8 +111,14 @@ var populatePage = function() {
             '<td>' + horsepower + '</td>' + '<td>' + trimMPG + '</td>' + 
             '<td><span class="lead">$' + convert2$(value.price.baseMSRP) + '</span> MSRP</td></tr>'
         );
-        main.getCarImg(value.id);
-    })    
+        main.getCarImg(value.id, "thumb");
+        if (key+1 < maxGalleryPics+1) {
+            //$("#overviewCarousel .carousel-inner").append("<div class='item'><img src='http://media.ed.edmunds-media.com/chevrolet/corvette-stingray/2014/oem/2014_chevrolet_corvette-stingray_convertible_base_fq_oem_1_600.jpg' alt='Chania'></div>")
+            main.getCarImg(value.id, "gallery", key);
+        }
+
+    })
+
     
     $('#bodyStyles').append(pageData.bodyStyles.join(', ').toLowerCase());
 }
@@ -124,7 +131,7 @@ $.get(getStylesURL, function(result) {
 
 
 
-$('#myCarousel').carousel({
+$('#overviewCarousel').carousel({
   interval: false
 })
 
