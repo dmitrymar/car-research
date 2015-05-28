@@ -17,11 +17,17 @@ var convert2$ = function(arg) {
     return arg.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 };
 
+  // Register a helper
+  Handlebars.registerHelper('convert2$', function(arg){
+    return arg.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+  });
+
 var populateObject = function() {
     pageData.make = carData.styles[0].make.name;
     pageData.model = carData.styles[0].model.name;
     pageData.year = carData.styles[0].year.year;
-    pageData.trims = carData.stylesCount
+    pageData.trimCount = carData.stylesCount
+    pageData.trims = carData.styles
     var MSRPS = [], 
     cityMPGS = [], cityMPGRange, hwyMPGS = [], hwyMPGRange, 
     engines = [], driveTrains = [], transmissions = [], transmissionType, 
@@ -79,54 +85,42 @@ var populateObject = function() {
     pageData.transmissions = $.unique(transmissions);
     pageData.bodyStyles = $.unique(bodyStyles);
     pageData.trimIDs = trimIDs;
+    pageData.title = pageData.year + ' ' + pageData.make + ' ' + pageData.model;
 }
 
 var populatePage = function() {
     populateObject();
-    var maxGalleryPics = 3;
-    $('#car-title').append(pageData.year + ' ' + pageData.make + ' ' + pageData.model);
-    $('#lowestMSRP').append(pageData.lowestMSRP);
-    $('#highestMSRP').append(pageData.highestMSRP);
-    if (pageData.hasMPG) {
-        var hasMPGString = '<span>'+ pageData.cityMPG + 
-        '</span> <small>city</small> / <span>' + pageData.hwyMPG + 
-        '</span> <small>hwy</small>';
-       $('#estimatedMPG').html(hasMPGString) 
-    }        
-    $('#engines').append(pageData.engines.join('<br>'));
-    $('#driveTrains').append(pageData.driveTrains.join('<br>'));
-    $('#transmissions').append(pageData.transmissions.join('<br>'));
-    $('#numberOfTrims').prepend(pageData.trims)
+    var maxGalleryPics = 3;       
     $.each(carData.styles, function(key, value) {
-        var trimTitle = '<a href="" class="lead">' + value.name + '</a>';
-        var trimMPG = value.hasOwnProperty('MPG') ? 
-        '<span class="lead">' + value.MPG.city + '</span> city<span class="lead"> ' + 
-        value.MPG.highway + '</span> hwy' : 'No Data';
-        var horsepower = value.engine.hasOwnProperty('horsepower') 
-        ? '<span class="lead">' + value.engine.horsepower + '</span> HP' : 'No Data';
+        main.getCarImg(value.id);
+    });
+    //
 
-        $('#availableTrims').append(
-            '<tr><td><img src="http://placehold.it/131x87&text=No Image Available" data-trimid="' + value.id + '"></td>' +             
-            '<th scope="row">'+ trimTitle + '</th>' + 
-            '<td>' + horsepower + '</td>' + '<td>' + trimMPG + '</td>' + 
-            '<td><span class="lead">$' + convert2$(value.price.baseMSRP) + '</span> MSRP</td></tr>'
-        );
-        main.getCarImg(value.id, "thumb");
-        if (key+1 < maxGalleryPics+1) {
-            //$("#overviewCarousel .carousel-inner").append("<div class='item'><img src='http://media.ed.edmunds-media.com/chevrolet/corvette-stingray/2014/oem/2014_chevrolet_corvette-stingray_convertible_base_fq_oem_1_600.jpg' alt='Chania'></div>")
-            main.getCarImg(value.id, "gallery", key);
-        }
 
-    })
 
     
-    $('#bodyStyles').append(pageData.bodyStyles.join(', ').toLowerCase());
+
+    
 }
 
 $.get(getStylesURL, function(result) {
     carData = result;
     populatePage();
+
+  // Grab the template script
+  var theTemplateScript = $("#car-template").html();
+
+  // Compile the template
+  var theTemplate = Handlebars.compile(theTemplateScript);
+
+  // Pass our data to the template
+  var theCompiledHtml = theTemplate(pageData);
+
+  // Add the compiled html to the page
+  $('.content-placeholder').html(theCompiledHtml);
+
 });
+
 
 
 

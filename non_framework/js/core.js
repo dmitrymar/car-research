@@ -1,39 +1,52 @@
-var main = {
-  baseServiceUrl: 'http://api.edmunds.com/api/vehicle/v2/',
-  baseImgUrl: 'http://media.ed.edmunds-media.com',
-  imgServiceUrl: 'https://api.edmunds.com/v1/api/vehiclephoto/service/findphotosbystyleid?styleId=',
-  imgServiceUrlParams: '&fmt=json&api_key=',
-  makesUrl: 'http://api.edmunds.com/api/vehicle/v2/' + 'makes?fmt=json&state=new&api_key=' + 'pavaa2wzx6fbzzv6et9n3n5a',
-  apiKey: 'pavaa2wzx6fbzzv6et9n3n5a',
-  getCarImg: function(id, type, key) {
+function App() {
+  this.currentYear = function() {
+    // do a script that calculates car model year October 1 to Sept 30
+    return 2015
+  },
+  this.baseServiceUrl = 'http://api.edmunds.com/api/vehicle/v2/',
+  this.baseImgUrl = 'http://media.ed.edmunds-media.com',
+  this.imgServiceUrl = 'https://api.edmunds.com/v1/api/vehiclephoto/service/findphotosbystyleid?styleId=',
+  this.imgServiceUrlParams = '&fmt=json&api_key=',
+  this.makesUrl = this.baseServiceUrl + "makes?fmt=json&year=" + this.currentYear() + "&api_key=" + 'pavaa2wzx6fbzzv6et9n3n5a',
+  this.apiKey = 'pavaa2wzx6fbzzv6et9n3n5a',
+  this.maxModelGalleryPics = 3,
+  this.trimPics = [],
+  this.getCarImg = function(id) {
     var imagesJSON = this.imgServiceUrl + id + this.imgServiceUrlParams + this.apiKey,
-    img, imgResized, size = type === "thumb" ? "131.jpg" : "600.jpg";
+    img, imgResized, img2Resized, img3Resized;
+    //gallery size "600.jpg"
     $.getJSON(imagesJSON, function(result) {
       if (!!result.length) {
         $.each(result, function(key, value) {
           if (value.shotTypeAbbreviation === 'FQ') {
             img = value.photoSrcs[0];
-            imgResized = main.baseImgUrl + img.substring(0, img.lastIndexOf('_')+1) + size;
-            return false;
+            imgResized = main.baseImgUrl + img.substring(0, img.lastIndexOf('_')+1);
+            if (!$("#carouselImg1").attr("src")) {
+              $("#carouselImg1").attr("src", imgResized + "600.jpg");
+            }
+          } else if (value.shotTypeAbbreviation === 'RQ') {
+            img = value.photoSrcs[0];
+            img2Resized = main.baseImgUrl + img.substring(0, img.lastIndexOf('_')+1);
+            if (!$("#carouselImg2").attr("src")) {
+              $("#carouselImg2").attr("src", img2Resized + "600.jpg");
+            }
+          } else {
+            img = value.photoSrcs[0];
+            img3Resized = main.baseImgUrl + img.substring(0, img.lastIndexOf('_')+1);
+            if (!$("#carouselImg3").attr("src")) {
+              $("#carouselImg3").attr("src", img3Resized + "600.jpg");
+            }           
           }
         });
-        if (type === "thumb") {
-          $("[data-trimid='" + id + "']").attr("src", imgResized);          
-        } else {
-          console.log(imgResized)
-          if (imgResized === $(".carousel-inner").find("img:eq(0)").attr("src")) {
-            console.log("same")
-          } else {
-            $(".carousel-inner").find("img:eq(" + key + ")").attr("src", imgResized);             
-          }
-         
-        }
+        $("[data-trimid='" + id + "']").attr("src", imgResized + "131.jpg");
       }
 
 
-    })
+    });    
   }
-};
+}
+
+var main = new App();
 
 ;(function ($) {
 
@@ -43,9 +56,10 @@ var main = {
   
   // once server side include is implemented for topnav.html, 
   // then use remove call to selectCar plugin
-  $('[data-select-car]').each(function () {
-    $(this).selectCar('init');
-  });    
+ 
+  $("[data-select-car='make']").each(function () {
+      $(this).carSelector('init');
+  });     
 })
 
 /*var baseServiceUrl = 'http://api.edmunds.com/api/vehicle/v2/', 

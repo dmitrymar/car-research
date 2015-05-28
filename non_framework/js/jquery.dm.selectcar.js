@@ -7,7 +7,7 @@
 
   "use strict";
 
-  var pluginName = "selectCar",
+  var pluginName = "carSelector",
       defaults = {
           propertyName: "value"
       };
@@ -39,9 +39,19 @@
           // you can add more functions like the one below and
           // call them like so: this.yourOtherFunction(this.element, this.options).
           this.createMakesList(this.element);
+          this.wireUpEvents()
+          console.log("test")
+      },
+      wireUpEvents: function() {
+          var self = this;
+          $("[data-select-car='make']").change(function(e) {
+            var selected =  $(e.target).find(':selected').val();
+            //redo 1st arg below
+            self.createModelsList($('[data-select-car=model]'), selected);
+          }) 
       },
       createModelsList: function(el, selected) {
-        var modelYear = 2015; // do a script that calculates car model year October 1 to Sept 30
+        var modelYear = main.currentYear(); 
         var modelsURL = main.baseServiceUrl + selected + '/models?year=' + modelYear + '&fmt=json&api_key=pavaa2wzx6fbzzv6et9n3n5a';
         var optionString = '',
         $modelDropdown = $('[data-select-car=model]');
@@ -63,8 +73,6 @@
       },
 
       createMakesList: function(el, options) {
-        var self = this;
-
         if($(el).data('selectCar') === 'make') {
           $.getJSON(main.makesUrl, function(data) {
             var optionString = '';
@@ -73,14 +81,7 @@
                 value.name+'</option>';
             })
             $(el).append(optionString);
-
-          })
-          $(el).change(function(e) {
-            var selected =  $(e.target).find(':selected').val();
-            console.log(selected)
-            //redo 1st arg below
-            self.createModelsList($('[data-select-car=model]'), selected);
-          })  
+          }) 
         }
 
       }
@@ -96,12 +97,6 @@
           }
       });
   };
-
-  // Plugin DATA-API
-  $('[data-select-car]').each(function () {
-      $(this).selectCar('init');
-  });
-
 
 
 })( jQuery, window, document );

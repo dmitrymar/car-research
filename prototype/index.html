@@ -17,7 +17,49 @@
   <div class="navbar navbar-inverse" role="navigation" id="topnav"></div>
 
   <div class="container">
-    <h1>Acura Model Lineup</h1>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+          <!-- Indicators -->
+          <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+          </ol>
+
+          <!-- Wrapper for slides -->
+          <div class="carousel-inner" role="listbox">
+            <div class="item active">
+              <a href="car-overview.html"><img src="img/homebanners/nsx.jpg" alt="Tesla"></a>
+              <div class="carousel-caption">
+                <h3>New, nerdy tech details on the Acura NSX</h3>
+              </div>
+            </div>
+
+            <div class="item">
+              <a href="car-overview.html"><img src="img/homebanners/corvette.jpg" alt="Corvette"></a>
+              <div class="carousel-caption">
+                <h3>2016 Corvette Z06 C7.R Edition looks racetrack fast</h3>
+              </div>              
+            </div>
+          </div>
+
+          <!-- Left and right controls -->
+          <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div><!-- end carousel -->        
+      </div>
+    </div>
+
+  
+  <a href="car-list.png"><img src="car-home-filters.png" alt=""></a>
+    <!-- <h1>Acura Model Lineup</h1> -->
 <!--     <div class="row">
       <div class="col-xs-3">
         <div class="form-group">
@@ -30,7 +72,7 @@
         </div>         
       </div>
     </div>  -->
-    <div class="row car-list">
+<!--     <div class="row car-list">
       <div class="col-xs-3">
         <div class="thumbnail">
           <a href="car-overview.html"><img src="http://placehold.it/253x180"></a>
@@ -49,12 +91,19 @@
           </div>
         </div>        
       </div>
-    </div>
+    </div> -->
   </div> <!-- /container -->
 
 <div id="images"></div>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+<!-- Lib Files Start -->
+    <script src="jquery/dist/jquery.min.js"></script>    
+    <script src="bootstrap/js/tab.js"></script>
+    <script src="bootstrap/js/collapse.js"></script>
+    <script src="bootstrap/js/transition.js"></script>
+    <script src="bootstrap/js/carousel.js"></script>
+<!-- Lib Files End -->
+
   <script type="text/javascript" src="script.js"></script>
   </body>
 </html>
