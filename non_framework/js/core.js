@@ -9,41 +9,8 @@ function App() {
   this.imgServiceUrlParams = '&fmt=json&api_key=',
   this.makesUrl = this.baseServiceUrl + "makes?fmt=json&year=" + this.currentYear() + "&api_key=" + 'pavaa2wzx6fbzzv6et9n3n5a',
   this.apiKey = 'pavaa2wzx6fbzzv6et9n3n5a',
-  this.maxModelGalleryPics = 3,
   this.trimPics = [],
-  this.getCarImg = function(id) {
-    var imagesJSON = this.imgServiceUrl + id + this.imgServiceUrlParams + this.apiKey,
-    img, imgResized, img2Resized, img3Resized;
-    //gallery size "600.jpg"
-    $.getJSON(imagesJSON, function(result) {
-      if (!!result.length) {
-        $.each(result, function(key, value) {
-          if (value.shotTypeAbbreviation === 'FQ') {
-            img = value.photoSrcs[0];
-            imgResized = main.baseImgUrl + img.substring(0, img.lastIndexOf('_')+1);
-            if (!$("#carouselImg1").attr("src")) {
-              $("#carouselImg1").attr("src", imgResized + "600.jpg");
-            }
-          } else if (value.shotTypeAbbreviation === 'RQ') {
-            img = value.photoSrcs[0];
-            img2Resized = main.baseImgUrl + img.substring(0, img.lastIndexOf('_')+1);
-            if (!$("#carouselImg2").attr("src")) {
-              $("#carouselImg2").attr("src", img2Resized + "600.jpg");
-            }
-          } else {
-            img = value.photoSrcs[0];
-            img3Resized = main.baseImgUrl + img.substring(0, img.lastIndexOf('_')+1);
-            if (!$("#carouselImg3").attr("src")) {
-              $("#carouselImg3").attr("src", img3Resized + "600.jpg");
-            }           
-          }
-        });
-        $("[data-trimid='" + id + "']").attr("src", imgResized + "131.jpg");
-      }
-
-
-    });    
-  }
+  this.galleryPics = []   
 }
 
 var main = new App();
