@@ -1,8 +1,6 @@
-Car-Gallery
-===========
+# Research a Car
 
-This car gallery displays pictures of all models for a selected make 
-
+This application allow a user to search for a specific vehicle or a general vehicle category.
 <p>
   <a href="index.html">View Demo</a>
 </p>
