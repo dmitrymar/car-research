@@ -42,7 +42,9 @@
                 <span class="sr-only">Next</span>
               </a>
             </div><!-- end carousel -->             
-          {{/if}}                 
+            {{else}}
+              image not available
+            {{/if}}                 
         </div><!-- end image or carousel -->
         <div class="col-xs-6">
           <div class="row">
@@ -78,7 +80,7 @@
             <tbody>
               {{#each trims}}
                 <tr>
-                  <td><img src="{{this.pic}}" data-trimid="{{this.id}}"></td>
+                  <td><img src="{{#if this.pic}}{{this.pic}}{{else}}http://placehold.it/131x87&text=No Image Available{{/if}}" data-trimid="{{this.id}}" title="{{this.pic}}"></td>
                   <td><span class="lead">{{this.name}}</span></td>
                   <td>{{#if this.engine.horsepower}}<span class="lead">{{this.engine.horsepower}}</span> HP{{/if}}</td>
                   <td>{{#if this.MPG.city}}<span class="lead">{{this.MPG.city}}</span> city

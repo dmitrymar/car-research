@@ -38,7 +38,6 @@
           // and this.options
           // you can add more functions like the one below and
           // call them like so: this.yourOtherFunction(this.element, this.options).
-          console.log("init fired ...")
           this.createMakesList(this.element);
           this.wireUpEvents();
           this.preselect();
@@ -49,15 +48,11 @@
           $("[data-select-car='make']").change(function(e) {
             var selected =  $(e.target).find(':selected').val(), params;
             if (!!location.search) {
-              console.group("check location search")
-              console.log(selected)
               params = self.parseQueryString();
               var makeParam = selected === "Make" ? params["make"] : selected;
-              console.log(makeParam)
               var modelParam = params["model"];
               self.createModelsList($('[data-select-car=model]'), makeParam, modelParam);
             } else {
-              console.log("makes selected")
               //redo 1st arg below
               self.createModelsList($('[data-select-car=model]'), selected);              
             }
@@ -86,9 +81,7 @@
       },
       preselect: function() {
         var self = this, params, makeParam;
-        if (!!location.search) {
-          console.log("preselecting make and model ...")
-          
+        if (!!location.search) {          
           params = self.parseQueryString();
           makeParam = params["make"];
           this.createMakesList(this.element, makeParam);
@@ -96,17 +89,14 @@
         }
       },
       createModelsList: function(el, selected, modelParam) {
-        console.log("creating models list ...")
         var modelYear = main.currentYear(),
         modelsURL = main.baseServiceUrl + selected + '/models?year=' + modelYear + '&fmt=json&api_key=pavaa2wzx6fbzzv6et9n3n5a',
         optionString = '',
         $modelDropdown = $('[data-select-car=model]');
-        console.log(modelsURL)
         $.getJSON(modelsURL, function(data) {
           $modelDropdown.empty().prop("disabled", false);
           $.each( data.models, function( key, value ) {
             var selected = value.niceName === modelParam ? "selected='selected'" : "";
-            console.log(value.niceName);
             optionString += '<option ' + selected + ' value="' + value.niceName + 
             '" data-year="' +  value.years[value.years.length - 1].year +'">' + value.name + '</option>'; 
           });
@@ -116,7 +106,6 @@
       },
 
       createMakesList: function(el, makeParam) {
-        console.log("creating makes list")
         if($(el).data('selectCar') === 'make') {
           $.getJSON(main.makesUrl, function(data) {
             var optionString = '';

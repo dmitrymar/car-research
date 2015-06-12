@@ -27,61 +27,39 @@ Handlebars.registerHelper('convert2$', convert2$);
 var xhrGetStyles = $.get(getStylesURL);
 
 function insertImages (imagesList, img, trimKey, pageData) {
-  console.log(pageData)
   if (!!imagesList.length) {
     $.each(imagesList, function(imageKey, value) {
       img = value.photoSrcs[0];
-      if (img) {
-        var imageSubStr = main.baseImgUrl + img.substring(0, img.lastIndexOf('_')+1);
-
-        // check if value is in array
-        //console.log($.inArray( imageSubStr, pageData.galleryPics ));
-        
-        if ($.inArray( imageSubStr, pageData.galleryPics ) === -1 && pageData.galleryPics.length < 3) {
-          if (value.shotTypeAbbreviation === 'FQ' 
-            || value.shotTypeAbbreviation === 'S' 
-            || value.shotTypeAbbreviation === 'I') {
-            pageData.galleryPics.push(imageSubStr);
-          }
+      console.log(value.shotTypeAbbreviation)
+      var imageSubStr = main.baseImgUrl + img.substring(0, img.lastIndexOf('_')+1);
+      // if (pageData.galleryPics.length === 0 && value.shotTypeAbbreviation === 'FQ') {
+      //   pageData.galleryPics.push(imageSubStr);
+      // }
+      // if (pageData.galleryPics.length === 1) {
+      //   pageData.galleryPics.push(imageSubStr);
+      // }
+      // if (pageData.galleryPics.length === 2) {
+      //   pageData.galleryPics.push(imageSubStr);
+      // }       
+      if ($.inArray( imageSubStr, pageData.galleryPics ) === -1 && pageData.galleryPics.length < 3) {
+        if (value.shotTypeAbbreviation === 'FQ' 
+          || value.shotTypeAbbreviation === 'S' 
+          || value.shotTypeAbbreviation === 'I') {
+          pageData.galleryPics.push(imageSubStr);
         }
-        // add only first FQ picture to trims[trimKey].pic
-        //console.log(!$.type(pageData.trims[trimKey].pic))
-
-        if (value.shotTypeAbbreviation === 'FQ') {
-          pageData.trims[trimKey].pic=imageSubStr+"131.jpg";
-        }
-
-      } else {
-        pageData.trims[trimKey].pic="http://placehold.it/131x87&text=No Image Available";
       }
 
-
+      if (value.shotTypeAbbreviation === 'FQ') {
+        pageData.trims[trimKey].pic=imageSubStr+"131.jpg";
+      }
     });
   } else {
+    console.log("No Images")
     pageData.trims[trimKey].pic="http://placehold.it/131x87&text=No Image Available";
   }
 }
 
-function setupPage (result) {
-  carData = result;
-
-
-  pageData.make = carData.styles[0].make.name;
-  pageData.model = carData.styles[0].model.name;
-  pageData.year = carData.styles[0].year.year;
-  pageData.trimCount = carData.stylesCount;
-  pageData.trims = carData.styles;
-  pageData.hasPics = main.hasPics;
-  var MSRPS = [], 
-  cityMPGS = [], cityMPGRange, hwyMPGS = [], hwyMPGRange, 
-  engines = [], driveTrains = [], transmissions = [], transmissionType, 
-  speeds, transmissionSpecs, bodyStyles = [], trimIDs = [];
-  pageData.trimIDs = trimIDs;
-  pageData.title = pageData.year + ' ' + pageData.make + ' ' + pageData.model;
-  pageData.trimPics = [];
-  pageData.galleryPics = [];
-  pageData.trims[0].pic = "";
-  $.each(pageData.trims, function(trimKey, value) {
+function createCustomProperites(trimKey, value, MSRPS, cityMPGS, hwyMPGS, engines, transmissionType, speeds, transmissionSpecs, transmissions, driveTrains, bodyStyles, trimIDs) {
     var imagesURL = main.imgServiceUrl + value.id + main.imgServiceUrlParams + main.apiKey,
     img, xhrGetImages = $.getJSON(imagesURL),
     hp = value.engine.hasOwnProperty('horsepower') ? value.engine.horsepower+'-hp, ' : '',
@@ -126,28 +104,53 @@ function setupPage (result) {
     pageData.engines = $.unique(engines);
     pageData.driveTrains = $.unique(driveTrains);
     pageData.transmissions = $.unique(transmissions);
+    if (cityMPGS[0]) {
+        pageData.cityMPG = $.unique(cityMPGS).length > 1 ? Math.min.apply(Math, cityMPGS) + '-' + Math.max.apply(Math, cityMPGS) : cityMPGS[0]
+        pageData.hwyMPG = $.unique(hwyMPGS).length > 1 ? Math.min.apply(Math, hwyMPGS) + '-' + Math.max.apply(Math, hwyMPGS) : hwyMPGS[0]
+        pageData.hasMPG = true;
+    } else {
+        pageData.hasMPG = false;
+    }
 
-    $.when( xhrGetImages ).done( function( imagesList ) {
-    insertImages(imagesList, img, trimKey, pageData)
+    //insert images
+    $.when( xhrGetImages )
+    .done(function(imagesList) {
+      insertImages(imagesList, img, trimKey, pageData);
+      console.log( "$.get succeeded" );
+    })
+    .fail(function() {
+      console.log( "$.get failed!" );
+    })
+    .always(function() {
       // Pass our data to the template
       theCompiledHtml = theTemplate(pageData);
 
       // Add the compiled html to the page
       $('.content-placeholder').html(theCompiledHtml);
-      $('#overviewCarousel').find(".item").first().addClass("active")
-    });
-  });
-  if (cityMPGS[0]) {
-      pageData.cityMPG = $.unique(cityMPGS).length > 1 ? Math.min.apply(Math, cityMPGS) + '-' + Math.max.apply(Math, cityMPGS) : cityMPGS[0]
-      pageData.hwyMPG = $.unique(hwyMPGS).length > 1 ? Math.min.apply(Math, hwyMPGS) + '-' + Math.max.apply(Math, hwyMPGS) : hwyMPGS[0]
-      pageData.hasMPG = true;
-  } else {
-      pageData.hasMPG = false;
-  }
+      $('#overviewCarousel').find(".item").first().addClass("active");
+    });  
 }
 
 $.when( xhrGetStyles ).done( function(result) { 
-  setupPage(result);
+  carData = result;
+  pageData.make = carData.styles[0].make.name;
+  pageData.model = carData.styles[0].model.name;
+  pageData.year = carData.styles[0].year.year;
+  pageData.trimCount = carData.stylesCount;
+  pageData.trims = carData.styles;
+  pageData.hasPics = main.hasPics;
+  var MSRPS = [], 
+  cityMPGS = [], hwyMPGS = [], hwyMPGRange, 
+  engines = [], driveTrains = [], transmissions = [], transmissionType, 
+  speeds, transmissionSpecs, bodyStyles = [], trimIDs = [];
+  pageData.trimIDs = trimIDs;
+  pageData.title = pageData.year + ' ' + pageData.make + ' ' + pageData.model;
+  pageData.trimPics = [];
+  pageData.galleryPics = [];
+  pageData.trims[0].pic = "";
+  $.each( pageData.trims, function( key, value ) {
+    createCustomProperites(key, value, MSRPS, cityMPGS, hwyMPGS, engines, transmissionType, speeds, transmissionSpecs, transmissions, driveTrains, bodyStyles, trimIDs);
+  });
 });
 
 $('#overviewCarousel').carousel({
