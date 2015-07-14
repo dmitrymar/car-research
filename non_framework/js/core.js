@@ -1,7 +1,7 @@
 function App() {
   this.currentYear = function() {
     // do a script that calculates car model year October 1 to Sept 30
-    return 2015
+    return 2016
   },
   this.baseServiceUrl = 'http://api.edmunds.com/api/vehicle/v2/',
   this.baseImgUrl = 'http://media.ed.edmunds-media.com',
@@ -78,3 +78,5 @@ $('body').on('change', '#car-models', function(event) {
 */
 
 }(window.jQuery));
+
+

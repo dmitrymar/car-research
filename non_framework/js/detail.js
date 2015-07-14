@@ -1,3 +1,32 @@
+      window.sdkAsyncInit = function() {
+        // Instantiate the SDK
+      var res = new EDMUNDSAPI('pavaa2wzx6fbzzv6et9n3n5a');
+
+      // Optional parameters
+      var options = {
+        "styleId": "101422464"
+      };
+
+      // Callback function to be called when the API response is returned
+      function success(res) {
+        console.log(res)
+        // var body = document.getElementById('footer');
+        // body.innerHTML = "<img src='http://media.ed.edmunds-media.com"+ res[0].photoSrcs[0] +"' />";
+        $("footer").append("<img src='http://media.ed.edmunds-media.com"+ res[0].photoSrcs[0] +"' />")
+      }
+
+      // Oops, Houston we have a problem!
+      function fail(data) {
+        console.log(data);
+      }
+
+      // Fire the API call
+      res.api('/v1/api/vehiclephoto/service/findphotosbystyleid', options, success, fail);
+
+        // Additional initialization code such as adding Event Listeners goes here
+      };
+
+
 (function ($) {
     "use strict"; 
 
@@ -26,29 +55,13 @@ Handlebars.registerHelper('convert2$', convert2$);
 
 var xhrGetStyles = $.get(getStylesURL);
 
-//Extract one FQ per body style
-//Iterate over all trims and if trimid matches gallerypic id then
-//then extract first "FQ" image from imageList
-function insertOverviewGalleryPics(imagesList, trimKey, pageData) {
-
-    for (var index in pageData.galleryPics) {
-
-      if (pageData.galleryPics[index].id === pageData.trims[trimKey].id) {
-        pageData.galleryPics[index].index = index;
-        pageData.galleryPics[index].active = index == 0 ? "active" : "";
-        pageData.galleryPics[index].pic = pageData.trims[trimKey].imageSubStr + "600.jpg"
-      }
-    }
-}
-
-
 function insertTrimPics (imagesList, trimKey, pageData) {
   if (!!imagesList.length) {
     $.each(imagesList, function(imageKey, value) {
       var img = value.photoSrcs[0];
-      pageData.trims[trimKey].imageSubStr = main.baseImgUrl + img.substring(0, img.lastIndexOf('_')+1);
+      var imageSubStr = main.baseImgUrl + img.substring(0, img.lastIndexOf('_')+1);
       if (value.shotTypeAbbreviation === 'FQ') {
-        pageData.trims[trimKey].pic = pageData.trims[trimKey].imageSubStr+"131.jpg";
+        pageData.trims[trimKey].pic=imageSubStr+"131.jpg";
         //exit .each function
         return false;
       }
@@ -123,12 +136,6 @@ function createCustomProperites(trimKey, value) {
     } else {
         engineString += value.engine.type;
     }
-
-    if (pageData.bodyStyles.indexOf(value.categories.vehicleStyle) === -1) {
-      pageData.galleryPics.push({"bodyStyle": value.categories.vehicleStyle,"id": value.id})
-    }
-
-
     pageData.engines.push(engineString);
     
     pageData.transmissionType = value.transmission.transmissionType;
@@ -147,7 +154,6 @@ function createCustomProperites(trimKey, value) {
     pageData.bodyStyles.push(value.categories.vehicleStyle);
     pageData.trimIDs.push(value.id);
 
-
     pageData.bodyStyles = $.unique(pageData.bodyStyles);
     pageData.engines = $.unique(pageData.engines);
     pageData.driveTrains = $.unique(pageData.driveTrains);
@@ -163,8 +169,10 @@ function createCustomProperites(trimKey, value) {
     //insert images
     $.when( xhrGetImages )
     .done(function(imagesList) {
+      //insertOverviewGalleryPics(imagesList, trimKey, pageData);
+      //Extract one FQ per body style
+      console.log(pageData.bodyStyles)
       insertTrimPics(imagesList, trimKey, pageData);
-      insertOverviewGalleryPics(imagesList, trimKey, pageData)
       console.log( "$.get succeeded" );
     })
     .fail(function() {
@@ -176,9 +184,7 @@ function createCustomProperites(trimKey, value) {
 
       // Add the compiled html to the page
       $('.content-placeholder').html(theCompiledHtml);
-      if (pageData.galleryPics.length === 1) {
-        $("#overviewCarousel").find(".carousel-control, .carousel-indicators").hide();
-      }
+      $('#overviewCarousel').find(".item").first().addClass("active");
     });  
 }
 
@@ -188,8 +194,7 @@ $.when( xhrGetStyles ).done( function(result) {
   pageData.model = carData.styles[0].model.name,
   pageData.year = carData.styles[0].year.year,
   pageData.trimCount = carData.stylesCount,
-  pageData.trims = carData.styles;
-  pageData.displayTrims = pageData.trims.slice(0, 10);  
+  pageData.trims = carData.styles,
   pageData.hasPics = main.hasPics,
   pageData.galleryShotTypes = ["FQ", "S", "I"],
   pageData.MSRPS = [], pageData.cityMPGS = [], pageData.hwyMPGS = [];  
@@ -199,21 +204,9 @@ $.when( xhrGetStyles ).done( function(result) {
   pageData.trimPics = [], pageData.transmissions = [];
   pageData.galleryPics = [];
   pageData.trims[0].pic = "";
-  iterateOverTrims();
-});
-
-function iterateOverTrims() {
   $.each( pageData.trims, function( key, value ) {
     createCustomProperites(key, value);
   });
-}
-
-$(window).scroll(function() {
-  if($(window).scrollTop() + $(window).height() == $(document).height()) {
-    pageData.displayTrims = pageData.trims.slice(10, 20);
-    iterateOverTrims();
-    console.log("bottom!");
-  }
 });
 
 $('#overviewCarousel').carousel({
