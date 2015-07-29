@@ -1,0 +1,20 @@
+<strong>Base MSPR</strong>
+<h3 class="overview-h3">$<span>{{lowestMSRP}}</span> – $<span>{{highestMSRP}}</span></h3>
+{{#if cityMPG}}
+  <br>
+  <strong>Estimated MPG</strong>
+  <h3 class="overview-h3"><span>{{cityMPG}}</span> <small>city</small> / <span>{{hwyMPG}}</span> <small>hwy</small></h3>
+{{/if}}
+<hr>
+<h3>Highlights</h3>
+
+<dl class="dl-horizontal feature-list">
+  <dt>Body Styles</dt>
+  <dd>{{#each bodyStyles}}{{this}}<br> {{/each}}</dd>                 
+  <dt>Engines</dt>
+  <dd id="engines">{{#each engines}}{{this}}<br> {{/each}}</dd>
+  <dt>Drive Train</dt>
+  <dd id="driveTrains">{{#each driveTrains}}{{this}}<br> {{/each}}</dd>
+  <dt>Transmissions</dt>
+  <dd id="transmissions">{{#each transmissions}}{{this}}<br> {{/each}}</dd>             
+</dl>  

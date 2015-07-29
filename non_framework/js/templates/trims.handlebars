@@ -1,0 +1,10 @@
+      {{#each displayTrims}}
+        <tr>
+          <td><img src="{{this.pic}}" data-trimid="{{this.id}}" title="{{this.picStatus}}"></td>
+          <td><span class="lead">{{this.name}}</span></td>
+          <td class="table-numbers">{{#if this.engine.horsepower}}<span class="lead">{{this.engine.horsepower}}</span> HP{{/if}}</td>
+          <td class="table-numbers">{{#if this.MPG.city}}<span class="lead">{{this.MPG.city}}</span> city
+          <span class="lead"> {{this.MPG.highway}}</span> hwy{{/if}}</td>
+          <td class="table-numbers"><span class="lead">${{convert2$ this.price.baseMSRP}}</span> MSRP</td>
+        </tr>
+      {{/each}} 
