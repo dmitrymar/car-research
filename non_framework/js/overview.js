@@ -31,8 +31,9 @@
       this.create();
     },
     cacheElements: function () {
-      //this.specsTemplate = Handlebars.compile($('#specs-template').html());
       this.compiledSpecsTmpl = Handlebars.templates['specs'];
+      this.compiledGalleryTmpl = Handlebars.templates['gallery'];
+      this.ajaxCounter = 0;
     },
     bindEvents: function () {
       $(window).scroll(function() {
@@ -62,28 +63,30 @@
     },
     populateStyles: function (result) {
       console.log("populateStyles")
+      var fcs = this.filteredCarStyles;
       this.carStyles = result;
-      this.filteredCarStyles.make = this.carStyles.styles[0].make.name;
-      this.filteredCarStyles.model = this.carStyles.styles[0].model.name;
-      this.filteredCarStyles.year = this.carStyles.styles[0].year.year;
-      this.filteredCarStyles.trimCount = this.carStyles.stylesCount;
-      this.filteredCarStyles.trims = this.carStyles.styles;
-      this.filteredCarStyles.displayTrims = this.filteredCarStyles.trims.slice(0, main.maxVisibleTrims);
-      this.filteredCarStyles.totalTrimsDisplayed = main.maxVisibleTrims;  
-      this.filteredCarStyles.hasPics = main.hasPics;
-      this.filteredCarStyles.MSRPS = []; 
-      this.filteredCarStyles.cityMPGS = []; 
-      this.filteredCarStyles.hwyMPGS = [];  
-      this.filteredCarStyles.engines = []; 
-      this.filteredCarStyles.transmissionType = [];
-      this.filteredCarStyles.trimIDs = []; 
-      this.filteredCarStyles.bodyStyles = []; 
-      this.filteredCarStyles.driveTrains = [];
-      this.filteredCarStyles.title = this.filteredCarStyles.year + ' ' + this.filteredCarStyles.make + ' ' + this.filteredCarStyles.model;
-      this.filteredCarStyles.trimPics = [];
-      this.filteredCarStyles.transmissions = [];
-      this.filteredCarStyles.galleryPics = [];
-      this.filteredCarStyles.trims[0].pic = "";
+      fcs.make = result.styles[0].make.name;
+      fcs.model = result.styles[0].model.name;
+      fcs.year = result.styles[0].year.year;
+      fcs.trimCount = result.stylesCount;
+      fcs.trims = result.styles;
+      fcs.displayTrims = fcs.trims.slice(0, main.maxVisibleTrims);
+      fcs.totalTrimsDisplayed = 0;  
+      fcs.hasPics = main.hasPics;
+      fcs.MSRPS = []; 
+      fcs.cityMPGS = []; 
+      fcs.hwyMPGS = [];  
+      fcs.engines = []; 
+      fcs.transmissionType = [];
+      fcs.trimIDs = []; 
+      fcs.bodyStyles = []; 
+      fcs.driveTrains = [];
+      fcs.title = fcs.year + ' ' + fcs.make + ' ' + fcs.model;
+      fcs.trimPics = [];
+      fcs.transmissions = [];
+      fcs.galleryPics = [];
+      fcs.galleryControls = true;
+      fcs.trims[0].pic = "";
       this.iterateOverTrims();
       this.render();
     },
@@ -95,6 +98,8 @@
       fcs.MSRPS.push(value.price.baseMSRP);
       fcs.lowestMSRP = util.convert2$(util.inArray("min", fcs.MSRPS));
       fcs.highestMSRP = util.convert2$(util.inArray("max", fcs.MSRPS));
+      fcs.priceRange = fcs.highestMSRP > fcs.lowestMSRP ? 
+      "$"+ fcs.lowestMSRP + " – " + "$" + fcs.highestMSRP : "$" + fcs.lowestMSRP;
 
       //Create engines list
       var hp = value.engine.hasOwnProperty('horsepower') ? value.engine.horsepower+'-hp, ' : '',
@@ -133,9 +138,6 @@
       }
 
       //Create body styles
-      if (fcs.bodyStyles.indexOf(value.categories.vehicleStyle) === -1) {
-        fcs.galleryPics.push({"bodyStyle": value.categories.vehicleStyle,"id": value.id})
-      }
       fcs.bodyStyles.push(value.categories.vehicleStyle);
       fcs.bodyStyles = $.unique(fcs.bodyStyles);
 
@@ -162,8 +164,9 @@
       fcs.trimIDs.push(value.id);
     },
     insertTrimPics: function (imagesList, trimKey, filteredCarStyles) {
-      console.log("insertTrimPics");
-      console.log(filteredCarStyles)
+      console.group("insertTrimPics")
+      console.log(filteredCarStyles);
+      console.groupEnd();
       var fcs = filteredCarStyles;
       if (!!imagesList.length) {
         $.each(imagesList, function(imageKey, value) {
@@ -192,7 +195,7 @@
       var fcs = this.filteredCarStyles;
       var displayTrims = fcs.displayTrims;
       console.log(displayTrims)
-      var ajaxCounter = 0
+      var ajaxCounter = this.ajaxCounter;
 
       for (var i = 0; i < displayTrims.length; i++) {
         var value = displayTrims[i];
@@ -210,27 +213,63 @@
         .fail(function() {
           console.log( "$.get failed!" );
         })
-        .always(function() {
+        .always(function(imagesList) {
           ajaxCounter++;
-          if (displayTrims.length === ajaxCounter) {
+          App.ajaxCounter = ajaxCounter;
+          if (ajaxCounter === 1) {
+            App.renderGallery(imagesList);
+          }
+                    
+          if (displayTrims.length === (ajaxCounter - fcs.totalTrimsDisplayed)) {
             App.renderTrims();
-          };          
+            fcs.totalTrimsDisplayed = ajaxCounter;
+            console.log(fcs)
+          };
         });        
-        // $.getJSON( imagesURL, function( imagesList ) {
-        //   console.log(imagesList )
-
-        //   //App.insertTrimPics(imagesList, i, fcs, isLastItem);
-        //   // if (isLastItem === (displayTrims.length - 1)) {
-        //   //   console.log(isLastItem)
-        //   //   //App.renderTrims()
-        //   // };
-        // });
       };
     },
-
-    renderGallery: function () {
+    renderGallery: function (imagesList) {
       console.log("displayGallery");
+      var fcs = this.filteredCarStyles;
+      var galleryPics = this.filteredCarStyles.galleryPics;
+      var imageCounter = 0;
+      var shotTypes = ["FQ", "F", "I"];
+      var insertedShotTypes = [];
+      $.each(imagesList, function(imageKey, value) {
+        var img = value.photoSrcs[0];
+        var pic = main.baseImgUrl + img.substring(0, img.lastIndexOf('_')+1)+"600.jpg";
+        var view = value.shotTypeAbbreviation;
+        var galleryLength = galleryPics.length;
+        console.log(view)
+        function populateGalleryPics(idx) {
+          var imageObject = {
+            pic: pic,
+            view: view,
+            caption: value.captionTranscript,
+            index: idx,
+            get active() {  return this.index === 0 ? "active" : "" }
+          }
+          galleryPics.splice(idx, 0, imageObject)
+        }
 
+        if (galleryPics.length < 3) {
+          if (insertedShotTypes.indexOf(view) === -1) {
+            $.each(shotTypes, function( shotKey, shotValue ) {
+              if (view === shotValue) {
+                populateGalleryPics(shotKey);
+              } 
+            });
+            insertedShotTypes.push(view);
+          }
+        } else {
+          //exit loop          
+          return false;         
+        }
+      });
+
+      console.log(galleryPics)
+      fcs.galleryControls = galleryPics.length > 1 ? true : false;
+      $('#gallery-placeholder').html(this.compiledGalleryTmpl(this.filteredCarStyles));
     },
     renderTrims: function () {
       console.log("renderTrims");
@@ -249,19 +288,16 @@
     loadMoreTrims: function() {
       console.log("loadMoreTrims")
       var fcs = this.filteredCarStyles;
-      var trimsSubsetStart, trimsSubsetEnd, lastTrimCount = fcs.totalTrimsDisplayed;
-      fcs.totalTrimsDisplayed += main.maxVisibleTrims;
-      fcs.totalTrimsDisplayed = fcs.totalTrimsDisplayed > fcs.trimCount ? fcs.trimCount : fcs.totalTrimsDisplayed;
-      if (fcs.totalTrimsDisplayed > fcs.trimCount) {
-        trimsSubsetEnd = fcs.trimCount;
-      } else {
-        trimsSubsetEnd = fcs.totalTrimsDisplayed;
-      }
-
-
+      var trimsSubsetEnd;
+      var lastTrimCount = fcs.totalTrimsDisplayed;
+      var nextTrimTotalTrims = lastTrimCount + main.maxVisibleTrims;
+      trimsSubsetEnd = fcs.trimCount > nextTrimTotalTrims ? nextTrimTotalTrims : fcs.trimCount;
       fcs.displayTrims = fcs.trims.slice(lastTrimCount, trimsSubsetEnd);
-      this.getTrimImages();
-      $("#loadingTrims").addClass("hidden");
+
+      setTimeout(function() {
+        App.getTrimImages();
+        $("#loadingTrims").addClass("hidden");
+      }, 5000)
     }
   };
 

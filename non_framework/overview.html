@@ -11,38 +11,6 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.2.0/less.min.js"></script>
   </head>
   <body>
-    <script id="gallery-template" type="text/x-handlebars-template">
-      {{#if galleryPics}}
-        <div id="overviewCarousel" class="carousel slide" data-ride="carousel">
-          <!-- Indicators -->
-          <ol class="carousel-indicators">
-            {{#each galleryPics}}
-              <li data-target="#overviewCarousel" data-slide-to="{{this.index}}" class="{{this.active}}"></li>
-            {{/each}}                
-          </ol>
-
-          <!-- Wrapper for slides -->
-          <div class="carousel-inner" role="listbox">
-            {{#each galleryPics}}
-              <div class="item {{this.active}}"><img src="{{this.pic}}"></div>
-            {{/each}}
-          </div>
-
-          <!-- Left and right controls -->
-          <a class="left carousel-control" href="#overviewCarousel" role="button" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-          </a>
-          <a class="right carousel-control" href="#overviewCarousel" role="button" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-          </a>
-        </div><!-- end carousel -->             
-        {{else}}
-          image not available
-        {{/if}}  
-    </script>
-
     <nav class="navbar navbar-inverse navbar-fixed-top"></nav>
 
     <div class="container">
