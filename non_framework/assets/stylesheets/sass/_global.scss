@@ -1,0 +1,47 @@
+body {
+    padding-top: 5em;
+}
+
+.navbar {
+	.navbar-header .navbar-brand {
+		color: $body-bg;
+	}
+	.navbar-right .idecide {
+		margin-left: 4rem;
+	}
+}
+.feature-list {
+	dt {
+		width: auto;
+	}
+	dd {
+		margin-left: 12rem;
+		text-transform: capitalize;
+	}
+}
+.overview-h3 {
+	margin-top: 0;
+}
+.panel-heading {
+	padding: 0;
+	.accordion-btn {
+		display: block;
+		margin: 0;
+		padding: 10px 15px;
+		text-decoration: none;
+		span {
+			float: right;
+		}
+	}
+}
+.car-list .thumbnail .caption {
+	.car-list__title {
+		height: 4rem;
+	}
+	.car-list__feature {
+		margin-bottom: 0;
+	}
+}
+.overview-table .table-numbers {
+	white-space: nowrap;
+}

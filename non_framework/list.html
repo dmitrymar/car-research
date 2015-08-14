@@ -1,24 +1,167 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>JS Bin</title>
-</head>
-<body>
-<div id="placeholder">
-</div>
-<script src="jquery/dist/jquery.min.js"></script>
-<script src="js/libs/handlebars.runtime.min.js"></script>
-<script src="templates.js"></script> 
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet/less" type="text/css" href="bootstrap/less/bootstrap.less" />
+    <link rel="stylesheet/less" type="text/css" href="styles.less" />    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.2.0/less.min.js"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top"></nav>
 
-<script>
-var compiledTemplate = Handlebars.templates['trims'];
+    <div class="container">
+      <p>Your search matched 23 cars</p>
+      <div class="row">
+        <div class="col-md-3">
+          REFINE   <a href="">reset</a>
+          <div class="panel-group" id="listAccordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="headingOne">
+                <h4 class="panel-title">
+                  <a role="button" data-toggle="collapse" data-parent="#listAccordion" 
+                  href="#collapseOne" aria-expanded="false" aria-controls="collapseOne" 
+                  class="accordion-btn collapsed">
+                  Starting Price<span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
+                  </a>
+                </h4>
+              </div>
+              <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" 
+              aria-labelledby="headingOne" aria-expanded="false">
+                <div class="panel-body" id="price-placeholder">
+                  from $35,000 to $100,000
+                </div>
+              </div>
+            </div>            
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="headingThree">
+                <h4 class="panel-title">
+                  <a class="collapsed" role="button" data-toggle="collapse" data-parent="#listAccordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    Vehicle Type
+                  </a>
+                </h4>
+              </div>
+              <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree" aria-expanded="false" style="height: 0px;">
+                <div class="panel-body">
+                  <label class="checkbox-inline">
+                    <input type="checkbox" id="" value=""> Convertible
+                  </label>
+                  <label class="checkbox-inline">
+                    <input type="checkbox" id="" value=""> Coupe
+                  </label>
+                  <label class="checkbox-inline">
+                    <input type="checkbox" id="" value=""> Crossover
+                  </label>
+                  <label class="checkbox-inline">
+                    <input type="checkbox" id="" value=""> Diesel
+                  </label>
+                  <label class="checkbox-inline">
+                    <input type="checkbox" id="" value=""> Electric
+                  </label>
+                  <label class="checkbox-inline">
+                    <input type="checkbox" id="" value=""> Hatchback
+                  </label>
 
-var html = compiledTemplate({ name : 'World' });
+                  <!-- Convertible
+<select name="params[category]" placeholder="">
+                                                                                                            <option value="">
+                                                                                                                    </option>
+                                                                                                            <option value="4dr Hatchback">
+                                                            4dr Hatchback                                                        </option>
+                                                                                                            <option value="Coupe">
+                                                            Coupe                                                        </option>
+                                                                                                            <option value="Convertible">
+                                                            Convertible                                                        </option>
+                                                                                                            <option value="Sedan">
+                                                            Sedan                                                        </option>
+                                                                                                            <option value="2dr Hatchback">
+                                                            2dr Hatchback                                                        </option>
+                                                                                                            <option value="Wagon">
+                                                            Wagon                                                        </option>
+                                                                                                            <option value="Regular Cab Pickup">
+                                                            Regular Cab Pickup                                                        </option>
+                                                                                                            <option value="Extended Cab Pickup">
+                                                            Extended Cab Pickup                                                        </option>
+                                                                                                            <option value="Crew Cab Pickup">
+                                                            Crew Cab Pickup                                                        </option>
+                                                                                                            <option value="2dr SUV">
+                                                            2dr SUV                                                        </option>
+                                                                                                            <option value="4dr SUV" selected="selected">
+                                                            4dr SUV                                                        </option>
+                                                                                                            <option value="Convertible SUV">
+                                                            Convertible SUV                                                        </option>
+                                                                                                            <option value="Cargo Van">
+                                                            Cargo Van                                                        </option>
+                                                                                                            <option value="Passenger Van">
+                                                            Passenger Van                                                        </option>
+                                                                                                            <option value="Cargo Minivan">
+                                                            Cargo Minivan                                                        </option>
+                                                                                                            <option value="Passenger Minivan">
+                                                            Passenger Minivan                                                        </option>
+                                                                                                        </select>
 
-console.log(html)
-$('#placeholder').html(html); 
+                  Coupe
+                  Crossover
+                  Diesel
+                  Electric
+                  Hatchback
+                  Hybrid
+                  Minivan
+                  Sedan
+                  SUV
+                  Truck
+                  Van
+                  Wagon -->
 
-</script>
-</body>
+                </div>
+              </div>
+            </div>
+          </div><!-- listAccordion end -->
+        </div>
+        <div class="col-md-9">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Make/Model</th>
+                <th></th>
+                <th>Fuel&nbsp;Economy</th>
+                <th>Price (MSRP)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><img src="http://media.ed.edmunds-media.com/tesla/model-s/2014/oem/2014_tesla_model-s_sedan_p85_fq_oem_1_131.jpg" data-trimid="" title=""></td>
+                <td>
+                  <a href="" class="lead">2015 Volkswagen Beetle Convertible</a>
+                  <p><a href="">5 trims</a></p>
+                </td>
+                <td>23-30 / 29-40 mpg
+                  <br>(city/hwy)
+                </td>
+                <td>$25,595 – $35,975</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div> <!-- /container -->
+
+    <footer class="footer" id="footer"></footer>
+<!-- Lib Files Start -->
+    <script src="jquery/dist/jquery.min.js"></script>
+    <!-- <script src="js/handlebars.min.js"></script> -->
+    <script src="js/libs/handlebars.runtime.min.js"></script>
+    <script src="js/templates/templates.js"></script>     
+    <script src="bootstrap/js/tab.js"></script>
+    <script src="bootstrap/js/collapse.js"></script>
+    <script src="bootstrap/js/transition.js"></script>
+    <script src="bootstrap/js/carousel.js"></script>
+<!-- Lib Files End -->
+    <script src="js/jquery.dm.selectcar.js"></script>
+    <script src="js/core.js"></script>
+    <script src="js/list.js"></script>    
+  </body>
 </html>

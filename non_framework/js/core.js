@@ -3,11 +3,23 @@ function App() {
     // do a script that calculates car model year October 1 to Sept 30
     return 2015
   },
+  this.trims = function(make, model) {
+      var stylesURL = this.baseServiceUrl + make + '/' + model + '/' + 
+      this.currentYear() + '/' + 'styles?state=new&view=full&fmt=json&api_key=' + main.apiKey;
+      return stylesURL;    
+  },
+  this.photos = function(id) {
+    return this.imgServiceUrl + id + this.imgServiceUrlParams + main.apiKey;
+  },
+  this.models = function(make) {
+    return this.baseServiceUrl + make + '/models?year=' + this.currentYear() + '&fmt=json&api_key=pavaa2wzx6fbzzv6et9n3n5a';    
+  },
   this.baseServiceUrl = 'http://api.edmunds.com/api/vehicle/v2/',
   this.baseImgUrl = 'http://media.ed.edmunds-media.com',
   this.imgServiceUrl = 'https://api.edmunds.com/v1/api/vehiclephoto/service/findphotosbystyleid?styleId=',
   this.imgServiceUrlParams = '&fmt=json&api_key=',
   this.makesUrl = this.baseServiceUrl + "makes?fmt=json&year=" + this.currentYear() + "&api_key=" + 'pavaa2wzx6fbzzv6et9n3n5a',
+  this.makesAndModels = "/non_framework/js/data/allmakes.json"
   this.apiKey = 'pavaa2wzx6fbzzv6et9n3n5a',
   this.maxVisibleTrims = 4,
   this.trimPics = [],
